@@ -22,6 +22,8 @@ export class MemberUser {
   address() {
     const data = this.user.data
     if (data.address1) {
+      // this is dangerous because: given the convention, we know this is internal because of the _
+      // meaning, it shouldn't be called outside of the class that's it's in.
       return this.user._formatAddress(data.address1, data.address2, data.city, data.state, data.zip)
     }
   }
