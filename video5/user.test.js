@@ -4,14 +4,15 @@ const TWO_DAYS_AGO = new Date(new Date().getTime() - (1000 * 60 * 60 * 24 * 2))
 
 describe('Member User', () => {
   let subject = {}
+  const data = {
+    address1: '123 Foo',
+    city: 'Footown',
+    state: 'FO',
+    zip: '14321',
+    username: 'fooey-foo'
+  }
   beforeEach(() => {
-    const user = new User({
-      address1: '123 Foo',
-      city: 'Footown',
-      state: 'FO',
-      zip: '14321',
-      username: 'fooey-foo'
-    })
+    const user = new User(data)
     subject = new MemberUser(user)
   })
 
@@ -25,7 +26,7 @@ describe('Member User', () => {
   })
 
   it('provides an address with a second address line', () => {
-    subject.data.address = 'Apt 2'
+    data.address = 'Apt 2'
     const expected = '123 Foo\nApt 2\nFootown, FO 14321'
     expect(subject.address()).toBe(expected)
   })

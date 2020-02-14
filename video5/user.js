@@ -29,10 +29,16 @@ export class MemberUser {
     if (data.address1) {
       // this is dangerous because: given the convention, we know this is internal because of the _
       // meaning, it shouldn't be called outside of the class that's it's in.
-      return this.user._formatAddress(data.address1, data.address2, data.city, data.state, data.zip)
+      return this._formatAddress(data.address1, data.address2, data.city, data.state, data.zip)
     }
   }
 
+  _formatAddress(add1, add2, city, state, zip) {
+    let out = add1
+    if (add2) out += `\n${add2}`
+    out += `\n${city}, ${state} ${zip}`
+    return out
+  }
 }
 
 // As of right now, there seem sto be a lot of concerns in the User class: the fact that we're doing various formatting and storing the data itself.
@@ -57,12 +63,5 @@ export class User {
 
   _millisToDays(millis) {
     return Math.floor(millis / 1000 / 60 / 24)
-  }
-
-  _formatAddress(add1, add2, city, state, zip) {
-    let out = add1
-    if (add2) out += `\n${add2}`
-    out += `\n${city}, ${state} ${zip}`
-    return out
   }
 }
