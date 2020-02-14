@@ -1,24 +1,33 @@
 /*
-* Start our refactoring by pulling the Member User functionality out of the User class.
-* 1. We will use "extraction" for this.
-* Our goal is slimming down the User class by literally pulling funcitonality out of it and into a different class.
-* It will act like an interface in that all of the Member-specific functionality will live in a MemberUser class.
+* Refactoring Admin User functionality.
 *
-* That way, I'll know if I need a member, we're going to use the MemberUser class.
+* Fascade pattern: an aesthetic front that is hiding some kind of complexity/abstraction/mess behind it.
+* We give the appearance that there is an AdminUser they can use, when it reality it's just proxying to the mess behind it.
+* The value is that we've created an interface, because User may be an enormous class with logic that is difficult to extract for
+* getting something such as ldapUser().
+* However, we did not slim User down at all.
 *
-* ------------->Any SHARED functionality will need to be there as well.<---------------
+* Again, the advantage here over extraction is that the class we're trying to extract from has too many intermingling dependencies to be able to safely pull things out and extract them.
+* This is a very fast way of creating a fascade in front of a complex object, if the goal is to create a simple, clean api.
 *
-* Remember, this sits between the calling code and the big user class.
-* MemberUser kind of wraps itself around the user class and functioning kind of like an interface.
+* If however, we want to dismantle the super object, then we should put in more work, more tests and use something like extraction.
 *
-* Because address() is something ONLY member users have, we can extract that out of address and into MemberUser
-*
-* A better solution rather than making _formatAddress public on the User class, we can instead he can put it into
-* some kind of formatting helper module or an address module/class that knows how to format itself.
-*
-* We're going to address name() - something used across many different users.
-* We weren't able to extract name() from user entirely.
 * */
+
+export class AdminUser {
+  contructor(user) {
+    this.user = user
+  }
+
+  name() {
+    return this.user.name()
+  }
+
+  ldapUser() {
+    return this.user.ldapUser()
+  }
+}
+
 
 export class MemberUser {
   constructor(user) {
@@ -58,12 +67,12 @@ export class User {
     return this._millisToDays(new Date().getTime() - started.getTime())
   }
 
-  ldapUser() {
-    return `${this.data.username}/big_co`
-  }
-
   name() {
     return this.data.username || this.data.trialName
+  }
+
+  ldapUser() {
+    return `${this.user.data.username}/big_co`
   }
 
   _millisToDays(millis) {
