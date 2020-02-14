@@ -16,7 +16,8 @@
 * A better solution rather than making _formatAddress public on the User class, we can instead he can put it into
 * some kind of formatting helper module or an address module/class that knows how to format itself.
 *
-*
+* We're going to address name() - something used across many different users.
+* We weren't able to extract name() from user entirely.
 * */
 
 export class MemberUser {
@@ -38,6 +39,10 @@ export class MemberUser {
     if (add2) out += `\n${add2}`
     out += `\n${city}, ${state} ${zip}`
     return out
+  }
+
+  name() {
+    return this.user.name()
   }
 }
 
