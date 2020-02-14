@@ -1,18 +1,35 @@
 /*
-* Refactoring Admin User functionality.
+* A problem with both MemberUser and AdminUser is that what if MemberUser still needs to access many of those original methods that live in User?
+* What if those methods are shared by other classes where we're proxying back logic like this.user.name() from User?
 *
-* Fascade pattern: an aesthetic front that is hiding some kind of complexity/abstraction/mess behind it.
-* We give the appearance that there is an AdminUser they can use, when it reality it's just proxying to the mess behind it.
-* The value is that we've created an interface, because User may be an enormous class with logic that is difficult to extract for
-* getting something such as ldapUser().
-* However, we did not slim User down at all.
+* If things are added over time, there's a maintenance cost to going back and adding those functions to other places.
 *
-* Again, the advantage here over extraction is that the class we're trying to extract from has too many intermingling dependencies to be able to safely pull things out and extract them.
-* This is a very fast way of creating a fascade in front of a complex object, if the goal is to create a simple, clean api.
+* Classical Inheritance (for TrialUser).
 *
-* If however, we want to dismantle the super object, then we should put in more work, more tests and use something like extraction.
+* Advantage: we can granularly move through and pull out what we want from the original user class without breaking anything.
+* This is because we have access to that from the parent object.
+* This means that is something like millisToDays is being used by many different subclasses or just inside the User class itself,
+* it wouldn't matter.
 *
-* */
+* Downsides: The api is clear, but can not see the methods it has in other places like REPL's because it's not on the class explicitly.
+*
+* What we haven't achieved, is we never determined a strong line for where millisToDays should go.
+* Overtime, we may create more and more coupling between the subclasses and the base class that would get more difficult to understand and pull apart than the original situation.
+*
+* The first two approaches were composition, this approach is inheritance.
+*
+* extraction: decoupled approach
+* fascade: define the api clearly but hasn't unrraveled anything
+* inheritance: build subclasses to create individual interfaces for our clients, which may create more problems than solutions down the road.
+**/
+
+
+export class TrialUser extends User {
+  daysLeftInTrial() {
+    const started = this.data.trialStarted
+    return this._millisToDays(new Date().getTime() - started.getTime())
+  }
+}
 
 export class AdminUser {
   contructor(user) {
@@ -60,11 +77,6 @@ export class MemberUser {
 export class User {
   constructor(data) {
     this.data = data
-  }
-
-  daysLeftInTrial() {
-    const started = this.data.trialStarted
-    return this._millisToDays(new Date().getTime() - started.getTime())
   }
 
   name() {

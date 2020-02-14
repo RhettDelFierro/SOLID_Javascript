@@ -1,4 +1,4 @@
-import {User, MemberUser, AdminUser} from './user'
+import {User, MemberUser, AdminUser, TrialUser} from './user'
 
 const TWO_DAYS_AGO = new Date(new Date().getTime() - (1000 * 60 * 60 * 24 * 2))
 
@@ -53,7 +53,7 @@ describe('Admin User', () => {
 describe('Trial User', () => {
   let subject = {}
   beforeEach(() => {
-    const user = new User({
+    const user = new TrialUser({
       trialName: 'fooey-foo',
       trialStarted: TWO_DAYS_AGO
     })
