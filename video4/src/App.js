@@ -21,6 +21,28 @@ class CheckboxInput extends Input { //---------EXTENDS >INPUT<--------------
   }
 }
 
+class ColorsInput extends Input { //---------EXTENDS >INPUT<--------------
+  field = () => {
+    return (
+      // HARDCODED to be type 'number'
+      <select className='App-multi-select'
+              name={this.props.name}
+              id={this.fieldId()}
+              onChange={this.props.onChange} multiple
+      >
+        <option value='red'>Red</option>
+        <option value='orange'>Orange</option>
+        <option value='yellow'>Yellow</option>
+        <option value='green'>Green</option>
+        <option value='blue'>Blue</option>
+        <option value='indigo'>Indigo</option>
+        <option value='violet'>Violet</option>
+      </select>
+    )
+  }
+}
+
+
 // Adding form fields as sub components to move responsibility out of the app component and into subcomponents:
 class Input extends Component {
   fieldId = () => {
@@ -33,18 +55,17 @@ class Input extends Component {
       <input type='text' name={this.props.name} id={this.fieldId()} onChange={this.props.onChange}/>
     )
   }
+
   render() {
     return (
       <div className='App-field'>
-        <label className='App-label' htmlFor={this.fieldId()}>{this.props.label}</label> /*this.props.label to generalize and re-use this component*/
+        <label className='App-label'
+               htmlFor={this.fieldId()}>{this.props.label}</label> /*this.props.label to generalize and re-use this component*/
         {this.field()}
       </div>
     )
   }
 }
-
-
-
 
 
 class App extends Component {
@@ -69,6 +90,11 @@ class App extends Component {
       value = parseInt(value, 10)
     } else if (target.type === 'checkbox') {
       value = target.checked
+    } else if (target.type === 'select-multiple') {
+      value = []
+      Array.prototype.forEach.call(target.options, option => {
+        if (option.selected) value.push(option.value)
+      })
     }
     this.setState({
       [name]: value
@@ -80,19 +106,7 @@ class App extends Component {
       <div className="App">
         <Input name='username' label='Your Username' onChange={this.updateField}/>
         <NumericInput name='quantity' label='Quantity' onChange={this.updateField}/>
-
-        <div className='App-field'>
-          <label className='App-label' htmlFor='field-colors'>Your Username</label>
-          <select className='App-multi-select' name='colors' id='field-colors'>
-            <option value='red'>Red</option>
-            <option value='orange'>Orange</option>
-            <option value='yellow'>Yellow</option>
-            <option value='green'>Green</option>
-            <option value='blue'>Blue</option>
-            <option value='indigo'>Indigo</option>
-            <option value='violet'>Violet</option>
-          </select>
-        </div>
+        <ColorsInput name='colors' label='Colors Used' onChange={this.updateField}/>
 
         <CheckboxInput name='mailing-list' label='Our Mailing List' onChange={this.updateField}/>
 
