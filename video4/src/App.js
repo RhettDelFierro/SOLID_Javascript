@@ -2,18 +2,26 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+// Adding form fields as sub components to move responsibility out of the app component and into subcomponents:
 class Input extends Component {
+  fieldId = () => {
+    return `field-${this.props.name}`
+  }
+
   render() {
     return (
       <div className='App-field'>
-        <label className='App-label' htmlFor='field-username'>Your Username</label>
-        <input type='text' name='username' id='field-username' onChange={this.props.onChange}/>
+        <label className='App-label' htmlFor={this.fieldId()}>{this.props.label}</label> /*this.props.label to generalize and re-use this component*/
+        <input type='text' name={this.props.name} id='field-username' onChange={this.props.onChange}/>
       </div>
     )
   }
 }
 
-// going to wire up the form fields with sub components to move responsibility out of the app component and into subcomponents.
+
+
+
+
 class App extends Component {
   constructor(props) {
     super(props) //to make sure we don't break anything in the base class
@@ -40,7 +48,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Input onChange={this.updateField}/>
+        <Input name='username' label='Your Username' onChange={this.updateField}/>
         <div className='App-field'>
           <label className='App-label' htmlFor='field-quantity'>Your Username</label>
           <input type='number' name='quantity' id='field-quantity'/>
