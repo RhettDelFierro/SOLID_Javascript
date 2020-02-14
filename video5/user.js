@@ -23,14 +23,6 @@
 * inheritance: build subclasses to create individual interfaces for our clients, which may create more problems than solutions down the road.
 **/
 
-
-export class TrialUser extends User {
-  daysLeftInTrial() {
-    const started = this.data.trialStarted
-    return this._millisToDays(new Date().getTime() - started.getTime())
-  }
-}
-
 export class AdminUser {
   contructor(user) {
     this.user = user
@@ -89,5 +81,12 @@ export class User {
 
   _millisToDays(millis) {
     return Math.floor(millis / 1000 / 60 / 24)
+  }
+}
+
+export class TrialUser extends User {
+  daysLeftInTrial() {
+    const started = this.data.trialStarted
+    return this._millisToDays(new Date().getTime() - started.getTime())
   }
 }
