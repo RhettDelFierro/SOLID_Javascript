@@ -86,6 +86,22 @@ class App extends Component {
   updateField = ({target}) => {
     const name = target.name
     let value = target.value
+
+    /*
+    * while this looks like an open closed principle violation, the root of this problem is a violation of the Liskov Substitution principle.
+    * Meaning strong behavioral typing. Most mathematical and esoteric of the principles.
+    *
+    * formal definition:
+    * "Let @[X] be a property PROVABLE about objects X of type T.
+    * Then @[Y] should be true for objects Y of type S where S is a subtype of T."
+    *
+    * easier definition:
+    * "Wherever an instance of a base class is used, you should be able to substitute it with an instance of a subclass
+    * without breaking anything. In other words, a subclass should never break any contract that the base class has with it's users."
+    *
+    *
+    *
+    * */
     if (target.type === 'number') {
       value = parseInt(value, 10)
     } else if (target.type === 'checkbox') {
