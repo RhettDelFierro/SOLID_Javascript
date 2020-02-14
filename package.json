@@ -1,0 +1,33 @@
+{
+  "name": "clean_coders",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "jest": {
+    "verbose": true,
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.(css|scss|less)$": "jest-css-modules"
+    },
+    "globals": {
+      "NODE_ENV": "test"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ]
+  },
+  "dependencies": {
+    "babel-jest": "^25.1.0",
+    "jest": "^25.1.0",
+    "jest-css-modules": "^2.1.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.8.4",
+    "babel-core": "^6.26.3",
+    "regenerator-runtime": "^0.13.3"
+  }
+}
