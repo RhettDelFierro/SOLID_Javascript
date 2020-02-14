@@ -2,6 +2,18 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+class Input extends Component {
+  render() {
+    return (
+      <div className='App-field'>
+        <label className='App-label' htmlFor='field-username'>Your Username</label>
+        <input type='text' name='username' id='field-username' onChange={this.props.onChange}/>
+      </div>
+    )
+  }
+}
+
+// going to wire up the form fields with sub components to move responsibility out of the app component and into subcomponents.
 class App extends Component {
   constructor(props) {
     super(props) //to make sure we don't break anything in the base class
@@ -12,17 +24,23 @@ class App extends Component {
       'mailing-list': false
     }
   }
+
   stateJson = () => {
     return JSON.stringify(this.state)
+  }
+
+  updateField = ({target}) => {
+    const name = target.name
+    const value = target.value
+    this.setState({
+      [name]: value
+    })
   }
 
   render() {
     return (
       <div className="App">
-        <div className='App-field'>
-          <label className='App-label' htmlFor='field-username'>Your Username</label>
-          <input type='text' name='username' id='field-username'/>
-        </div>
+        <Input onChange={this.updateField}/>
         <div className='App-field'>
           <label className='App-label' htmlFor='field-quantity'>Your Username</label>
           <input type='number' name='quantity' id='field-quantity'/>
