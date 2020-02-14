@@ -120,7 +120,10 @@ class App extends Component {
     * "Wherever an instance of a base class is used, you should be able to substitute it with an instance of a subclass
     * without breaking anything. In other words, a subclass should never break any contract that the base class has with it's users."
     *
-    *
+    * This fix here is that because all of the logic is determing for the different types how to parse out the value.
+    * That kind of logic belongs in the SEPARATE CLASSES. We instead want for each of these classes to have a function called
+    * value(...) which given a target that gets passed in, it will be able to tell you what the actual value of that target is based
+    * on it's type.
     *
     * */
     // if (target.type === 'number') {
