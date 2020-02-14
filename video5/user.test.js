@@ -1,4 +1,4 @@
-import {User} from './user'
+import {User, MemberUser} from './user'
 
 const TWO_DAYS_AGO = new Date(new Date().getTime() - (1000 * 60 * 60 * 24 * 2))
 
@@ -12,7 +12,7 @@ describe('Member User', () => {
       zip: '14321',
       username: 'fooey-foo'
     })
-    subject = user
+    subject = new MemberUser(user)
   })
 
   it('provides a name', () => {
