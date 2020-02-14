@@ -12,6 +12,11 @@
 * MemberUser kind of wraps itself around the user class and functioning kind of like an interface.
 *
 * Because address() is something ONLY member users have, we can extract that out of address and into MemberUser
+*
+* A better solution rather than making _formatAddress public on the User class, we can instead he can put it into
+* some kind of formatting helper module or an address module/class that knows how to format itself.
+*
+*
 * */
 
 export class MemberUser {
@@ -30,6 +35,8 @@ export class MemberUser {
 
 }
 
+// As of right now, there seem sto be a lot of concerns in the User class: the fact that we're doing various formatting and storing the data itself.
+// This means there's an opportunity to take formatAddress and pull it.
 export class User {
   constructor(data) {
     this.data = data
