@@ -12,6 +12,15 @@ class NumericInput extends Input { //---------EXTENDS >INPUT<--------------
   }
 }
 
+class CheckboxInput extends Input { //---------EXTENDS >INPUT<--------------
+  field = () => {
+    return (
+      // HARDCODED to be type 'number'
+      <input type='checkbox' name={this.props.name} id={this.fieldId()} onChange={this.props.onChange}/>
+    )
+  }
+}
+
 // Adding form fields as sub components to move responsibility out of the app component and into subcomponents:
 class Input extends Component {
   fieldId = () => {
@@ -55,7 +64,12 @@ class App extends Component {
 
   updateField = ({target}) => {
     const name = target.name
-    const value = target.value
+    let value = target.value
+    if (target.type === 'number') {
+      value = parseInt(value, 10)
+    } else if (target.type === 'checkbox') {
+      value = target.checked
+    }
     this.setState({
       [name]: value
     })
@@ -79,10 +93,9 @@ class App extends Component {
             <option value='violet'>Violet</option>
           </select>
         </div>
-        <div className='App-field'>
-          <label className='App-label' htmlFor='field-mailing-list'>Join Our Mailing List</label>
-          <input type='checkbox' name='mailing-list' id='field-mailing-list'/>
-        </div>
+
+        <CheckboxInput name='mailing-list' label='Our Mailing List' onChange={this.updateField}/>
+
 
         <div className='App-field'>
           <button className='App-button'>Submit</button>
