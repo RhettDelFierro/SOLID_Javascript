@@ -4,6 +4,9 @@ import './App.css';
 
 // subclassing the input:
 class NumericInput extends Input { //---------EXTENDS >INPUT<--------------
+  value = (target) => {
+    return parseInt(target.value, 10)
+  }
   field = () => {
     return (
       // HARDCODED to be type 'number'
@@ -13,22 +16,32 @@ class NumericInput extends Input { //---------EXTENDS >INPUT<--------------
 }
 
 class CheckboxInput extends Input { //---------EXTENDS >INPUT<--------------
+  value = (target) => {
+    return target.checked
+  }
   field = () => {
     return (
       // HARDCODED to be type 'number'
-      <input type='checkbox' name={this.props.name} id={this.fieldId()} onChange={this.props.onChange}/>
+      <input type='checkbox' name={this.props.name} id={this.fieldId()} onChange={this.onChange}/>
     )
   }
 }
 
 class ColorsInput extends Input { //---------EXTENDS >INPUT<--------------
+  value = (target) => {
+    let value = []
+    Array.prototype.forEach.call(target.options, option => {
+      if (option.selected) value.push(option.value)
+    })
+    return value
+  }
   field = () => {
     return (
       // HARDCODED to be type 'number'
       <select className='App-multi-select'
               name={this.props.name}
               id={this.fieldId()}
-              onChange={this.props.onChange} multiple
+              onChange={this.onChange} multiple
       >
         <option value='red'>Red</option>
         <option value='orange'>Orange</option>
@@ -52,8 +65,16 @@ class Input extends Component {
   // more reuse by making the types of input configurable. The output will be overwritten by a subclass.
   field = () => {
     return (
-      <input type='text' name={this.props.name} id={this.fieldId()} onChange={this.props.onChange}/>
+      <input type='text' name={this.props.name} id={this.fieldId()} onChange={this.onChange}/>
     )
+  }
+
+  value = (target) => {
+    return target.value
+  }
+
+  onChange = (event) => {
+    this.props.onChange(event, this.value(event.target))
   }
 
   render() {
@@ -83,9 +104,9 @@ class App extends Component {
     return JSON.stringify(this.state)
   }
 
-  updateField = ({target}) => {
+  updateField = ({target}, value) => {
     const name = target.name
-    let value = target.value
+    // let value = target.value
 
     /*
     * while this looks like an open closed principle violation, the root of this problem is a violation of the Liskov Substitution principle.
@@ -102,16 +123,16 @@ class App extends Component {
     *
     *
     * */
-    if (target.type === 'number') {
-      value = parseInt(value, 10)
-    } else if (target.type === 'checkbox') {
-      value = target.checked
-    } else if (target.type === 'select-multiple') {
-      value = []
-      Array.prototype.forEach.call(target.options, option => {
-        if (option.selected) value.push(option.value)
-      })
-    }
+    // if (target.type === 'number') {
+    //   value = parseInt(value, 10)
+    // } else if (target.type === 'checkbox') {
+    //   value = target.checked
+    // } else if (target.type === 'select-multiple') {
+    //   value = []
+    //   Array.prototype.forEach.call(target.options, option => {
+    //     if (option.selected) value.push(option.value)
+    //   })
+    // }
     this.setState({
       [name]: value
     })

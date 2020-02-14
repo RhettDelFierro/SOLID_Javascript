@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="536dd2d9-e696-4b9b-996e-930f97506a70" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/video4/src/liskov.js" beforeDir="false" afterPath="$PROJECT_DIR$/video4/src/liskov.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/video4/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/video4/src/App.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -15,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/video4/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="99" column="72" selection-start-line="99" selection-start-column="72" selection-end-line="99" selection-end-column="72" />
+            <state relative-caret-position="62">
+              <caret line="105" lean-forward="true" selection-start-line="105" selection-end-line="105" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -27,11 +27,22 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/video4/src/liskov.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="98" column="66" lean-forward="true" selection-start-line="98" selection-start-column="66" selection-end-line="98" selection-end-column="66" />
+            <state relative-caret-position="918">
+              <caret line="104" lean-forward="true" selection-start-line="104" selection-end-line="104" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/video4/src/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -53,6 +64,7 @@
       <find>encode</find>
       <find>almost out</find>
       <find>formatter.format</find>
+      <find>constructor() {</find>
     </findStrings>
     <replaceStrings>
       <replace>&lt;strong</replace>
@@ -120,8 +132,8 @@
         <option value="$PROJECT_DIR$/video3/step19/src/paint-store.js" />
         <option value="$PROJECT_DIR$/video3/step19/test/index.test.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/video4/src/App.js" />
         <option value="$PROJECT_DIR$/video4/src/liskov.js" />
+        <option value="$PROJECT_DIR$/video4/src/App.js" />
       </list>
     </option>
   </component>
@@ -217,18 +229,18 @@
       <workItem from="1581546542481" duration="2256000" />
       <workItem from="1581550111454" duration="3079000" />
       <workItem from="1581611330270" duration="21258000" />
-      <workItem from="1581695413707" duration="6140000" />
+      <workItem from="1581695413707" duration="6715000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37405000" />
+    <option name="totallyTimeSpent" value="37980000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2732475" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2732475" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -240,7 +252,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.48554218" />
+      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.48554218" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Thumbnails" order="11" weight="0.3286119" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -274,7 +286,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/video3/step13/src/paint-store" />
     <entry file="file://$PROJECT_DIR$/video3/step13/test/index.test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -583,20 +594,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/video4/src/App.js">
+    <entry file="file://$PROJECT_DIR$/video4/src/liskov.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="99" column="72" selection-start-line="99" selection-start-column="72" selection-end-line="99" selection-end-column="72" />
+        <state relative-caret-position="918">
+          <caret line="104" lean-forward="true" selection-start-line="104" selection-end-line="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/video4/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/video4/src/liskov.js">
+    <entry file="file://$PROJECT_DIR$/video4/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="98" column="66" lean-forward="true" selection-start-line="98" selection-start-column="66" selection-end-line="98" selection-end-column="66" />
+        <state relative-caret-position="62">
+          <caret line="105" lean-forward="true" selection-start-line="105" selection-end-line="105" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
