@@ -60,7 +60,7 @@ class NewWall {
     } else {
       const hole1 = drillHole(x, y)
       const hole2 = drillHole(x + 3, y)
-      attachWithScrews(handhold, drillHold(x,y ), drillHold(x+3, y))
+      attachWithScrews(handhold, hole1, hole2)
     }
 
   }
@@ -89,3 +89,39 @@ class BlueHandHold extends NewHandHold {
     this.color = 'blue'
   }
 }
+
+/*
+* Example without types/classes
+*
+* Only thing that matters is the abstractions in our mind and the intent of the code.
+*
+* We know in our minds, that all of these things in our MINDS are handholds
+* and the IDEA of being a handhold must be MEANINGFUL in our code. Thus the liskov substitution principle still applies.
+*
+* Meaning, if you acknowledge the existence of these implicit types, then the implications of lsp play out as usual:
+* 1. There was a contract that was established by that first handhold.
+* 2. The handholds that came after it broke that contract
+* */
+
+function attachHandhold(handhold, x, y) {
+  if (handhold.color === 'green') {
+    const hole = drillHole(x, y)
+    attachWithScrews(handhold, hole1)
+  } else if (handhold.color === 'blue') {
+    attachWithGlue(handhold, x, y)
+  } else if (handhold.color === 'yellow') {
+    attachWithTape(handhold, x, y)
+  } else {
+    const hole1 = drillHole(x, y)
+    const hole2 = drillHole(x + 3, y)
+    attachWithScrews(handhold, hole1, hole2)
+  }
+}
+
+const redHandHold = {color: 'red'}
+
+const greenHandHold = {color: 'green'}
+
+const yellowHandHold = {color: 'yellow'}
+
+const blueHandHold = {color: 'blue'}
