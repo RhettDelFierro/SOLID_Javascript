@@ -44,6 +44,8 @@ import './App.css';
 *
 * Now, before we go make changes to the logic: before we add new servers or new transports, new logic to the way we're dealing with data,
 * We want to extract out these low-level implementation details so that we can then later do that swap out very cleanly.
+* The high-level details will stay in place and everything else needs to be delegated off to something else:
+* Perhaps a client: perhaps we need some kind of data client that we're going to hit.
 * */
 class App extends Component {
   constructor(props) {
