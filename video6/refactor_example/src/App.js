@@ -3,24 +3,13 @@ import logo from './logo.svg';
 import './App.css';
 import PaintDataClient from './paint-data-client'
 
-
 /**
- * We can extract the logic of which client to use and separate it out into a new module.
+ * In order to be declarative and nto implicit about which client we're going to test, is by saying what we mean.
  *
- * PaintDataClient MAY be a reference to either PaintJsClient or SuperInvestorClient.
- * App doesn't need to know which one it is.
- *
- * The weaknesses to this approach:
- * 1. You can only initialize the module once. Whatever is chosen when the App starts, that's what it's going to be.
- *    --To fix that slightly: rather than export a class you can export a function:
- *      export function getPaintDataClient() { return user.legacy ? new PainJsClient() : new SuperInvestorClient() }
- * 2. This would be more difficult to test.
- *    --In order to set up this situation, we would have to do one of a few things:
- *      a. mock these classes thoroughly and something like this is not 100% clear how you'd mock it out.
- *      b. more likely option: you'd stub out a bunch of stuff. In our case we'd have to set up the user so that it'd have a user.legacy true and false cases.
+ * Here, we can pass in the client to the app as a prop.
+ * This will allow us to instantiate an App with any client that we want and we are DECLARATIVELY pushing that logic up to the next level, up towards main.
  *
  */
-
 class App extends Component {
   constructor(props) {
     super(props)
@@ -28,7 +17,7 @@ class App extends Component {
       colorData: []
     }
 
-    this.client = new PaintDataClient()
+    this.client = props.client
     this.fetchColorData()
   }
 

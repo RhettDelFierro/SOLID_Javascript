@@ -1,10 +1,4 @@
-if (user.legacy) { // can also be a config.legacy
-  export default PaintJsClient
-} else {
-  export default SuperInvestorClient
-}
-
-class PaintJsClient {
+export class PaintJsClient {
   fetchColorData = () => {
     return fetch('http://paintjs2000.com/colors', {
       mode: 'cors',
@@ -28,7 +22,7 @@ class PaintJsClient {
   }
 }
 
-class SuperInvestorClient {
+export class SuperInvestorClient {
   fetchColorData = () => {
     return fetch('http://bigbucksinvestor.com/hexes', {
       mode: 'cors',
