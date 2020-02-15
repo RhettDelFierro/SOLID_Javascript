@@ -2,24 +2,6 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-/**
- *  In this commit we were able to use a consistent interface [fetchColorData() and updateColorCount(id, count)]
- * in order to build both a PaintJsClient and SuperInvestorClient.
- * and now we can switch between them in order to access any of these servers.
- * However, there is a question: where should that decision be made?
- * Where is the right inflection point to decide whether we're using the old legacy client or the new investor client?
-
- * The Dependency Inversion Principle supports the idea of being able to swap out.
- *
- * As of right now, we're still mixing the high-level and low-level details together:
- * The high-level policies: 
- * -we need to be able to fetchColorData and updateColorCount
- * The low-level implementation details:
- * -that we want to use either PainJsClient or SuperInvestorClient
- *
- * ^^ are still intermingled so we have to figure out where is the right place in the code to make those kind of decisions.
-*/
-
 class PaintJsClient {
   fetchColorData = () => {
     return fetch('http://paintjs2000.com/colors', {
@@ -44,8 +26,6 @@ class PaintJsClient {
   }
 }
 
-// we do know that we want the same functions as PaintJsClient which makes it able to seamlessly swap these with each other.
-// we need to also do some transformation in the responses because the rest of the app is looking for a certain format.
 class SuperInvestorClient {
   fetchColorData = () => {
     return fetch('http://bigbucksinvestor.com/hexes', {
@@ -69,10 +49,6 @@ class SuperInvestorClient {
     })
   }
 
-  // originally this was updateColorCount(id, count) but the new server knows nothing about ids, it only knows hex codes.
-  // We DON'T want to just change the function signature of this method, because that'd break the interfaces already being used.
-  // ^^ that would be a LSP violation to have one of these new objects change the rule/interface by HOW it's being used.
-  // Instead we'll translate the id to a hex in the function.
   updateColorCount = (id, count) => {
     const hexValue = this.idToHex(id)
     return fetch(`http://bigbucksinvestor.com/hexes/${hexValue}`, {
@@ -119,13 +95,28 @@ class SuperInvestorClient {
   }
 }
 
+/**
+ * We can use a config file to determine which client to use.
+ * However, this would still be mixing high-level policy with low-level implementation details.
+ * Because now it's the details about the CONDITIONS under which we should use the legacy version or the new investor's version.
+ * We've now taken those details and pushed that into the Application
+ *
+ * The next commit will show how to pull this further out and make a new abstraction.
+*/
+
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       colorData: []
     }
-    this.client = new PaintJsClient()
+
+    if (config.legacy) { // however some other options to determine this: user.legacy
+      this.client = new PaintJsClient()
+    } else {
+      this.client = new SuperInvestorClient()
+    }
+
     this.fetchColorData()
   }
 
