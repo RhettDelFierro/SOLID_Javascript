@@ -9,7 +9,6 @@ class NumericInput extends Input { //---------EXTENDS >INPUT<--------------
   }
   field = () => {
     return (
-      // HARDCODED to be type 'number'
       <input type='number' name={this.props.name} id={this.fieldId()} onChange={this.props.onChange}/>
     )
   }
@@ -21,7 +20,6 @@ class CheckboxInput extends Input { //---------EXTENDS >INPUT<--------------
   }
   field = () => {
     return (
-      // HARDCODED to be type 'number'
       <input type='checkbox' name={this.props.name} id={this.fieldId()} onChange={this.onChange}/>
     )
   }
@@ -37,7 +35,6 @@ class ColorsInput extends Input { //---------EXTENDS >INPUT<--------------
   }
   field = () => {
     return (
-      // HARDCODED to be type 'number'
       <select className='App-multi-select'
               name={this.props.name}
               id={this.fieldId()}
