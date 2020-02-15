@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-// role will be to deal with the data.
-// then we want to use this client inside the application (App) so that we can use that rather than having all the logic IN-LINE.
+
 class PaintJsClient {
   fetchColorData = () => {
     return fetch('http://paintjs2000.com/colors', {
@@ -28,16 +27,64 @@ class PaintJsClient {
   }
 }
 
-/*
-* Now we have clearly de-lineated the high-level policy with the low-level implementaion details,
-* it gives us some flexibility to now be able to create a NEW implementation that we can swap out pretty easily.
-*
-* We can create another class that behaves similarly to PaintJsClient but is actually hitting the new investor's server.
-*
-* It's worth noting that right now, we are still using PaintJsClient() inside the application (this.client = new PaintJsClient()).
-* We will make a decision later on WHERE we want to initiate these things.
-* */
+// we do know that we want the same functions as PaintJsClient which makes it able to seamlessly swap these with each other.
+// we need to also do some transformation in the responses because the rest of the app is looking for a certain format.
+class SuperInvestorClient {
+  fetchColorData = () => {
+    return fetch('http://bigbucksinvestor.com/hexes', {
+      mode: 'cors',
+      header: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => {
+      return res.json()
+    }).then(payload => {
+      return {
+        colors: payload.hexes.map(hex => {
+          const hexValue = hex.hex
+          return {
+            id: this.hexToId(hexValue),
+            color: this.hexToName(hexValue),
+            count: hex.count
+          }
+        })
+      }
+    })
+  }
 
+  updateColorCount = (id, count) => {
+    return fetch(`http://bigbucksinvestor.com/hexes/${id}`, {
+      method: 'POST',
+      mode: 'cors',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({count})
+    })
+  }
+
+  hexToId = (hex) => {
+    const map = {
+      'cc5c': 1,
+      '768fb8': 2,
+      '9eae65': 3,
+      'ffd700': 4
+    }
+
+    return map[hex]
+  }
+
+  hexToName = (hex) => {
+    const map = {
+      'cc5c': 'Nice Red',
+      '768fb8': 'Super Blue',
+      '9eae65': 'Fantastic Green',
+      'ffd700': 'Wonderful Yellow'
+    }
+
+    return map[hex]
+  }
+}
 
 class App extends Component {
   constructor(props) {

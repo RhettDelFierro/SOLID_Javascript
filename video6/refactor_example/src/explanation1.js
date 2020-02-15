@@ -43,3 +43,18 @@
 * The high-level details will stay in place and everything else needs to be delegated off to something else:
 * Perhaps a client: perhaps we need some kind of data client that we're going to hit.
 * */
+
+//======================================================================================================================
+
+// role will be to deal with the data.
+// then we want to use this client inside the application (App) so that we can use that rather than having all the logic IN-LINE.
+
+/*
+* Now we have clearly de-lineated the high-level policy with the low-level implementaion details,
+* it gives us some flexibility to now be able to create a NEW implementation that we can swap out pretty easily.
+*
+* We can create another class that behaves similarly to PaintJsClient but is actually hitting the new investor's server.
+*
+* It's worth noting that right now, we are still using PaintJsClient() inside the application (this.client = new PaintJsClient()).
+* We will make a decision later on WHERE we want to initiate these things.
+* */
