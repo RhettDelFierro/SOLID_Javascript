@@ -1,108 +1,25 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import PaintDataClient from './paint-data-client'
 
-class PaintJsClient {
-  fetchColorData = () => {
-    return fetch('http://paintjs2000.com/colors', {
-      mode: 'cors',
-      header: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => {
-      return res.json()
-    })
-  }
-
-  updateColorCount = (id, count) => {
-    return fetch(`http://paintjs2000.com/colors/${id}`, {
-      method: 'POST',
-      mode: 'cors',
-      header: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({count})
-    })
-  }
-}
-
-class SuperInvestorClient {
-  fetchColorData = () => {
-    return fetch('http://bigbucksinvestor.com/hexes', {
-      mode: 'cors',
-      header: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => {
-      return res.json()
-    }).then(payload => {
-      return {
-        colors: payload.hexes.map(hex => {
-          const hexValue = hex.hex
-          return {
-            id: this.hexToId(hexValue),
-            color: this.hexToName(hexValue),
-            count: hex.count
-          }
-        })
-      }
-    })
-  }
-
-  updateColorCount = (id, count) => {
-    const hexValue = this.idToHex(id)
-    return fetch(`http://bigbucksinvestor.com/hexes/${hexValue}`, {
-      method: 'POST',
-      mode: 'cors',
-      header: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({count})
-    })
-  }
-
-  hexToId = (hex) => {
-    const map = {
-      'cc5c': 1,
-      '768fb8': 2,
-      '9eae65': 3,
-      'ffd700': 4
-    }
-
-    return map[hex]
-  }
-
-  hexToName = (hex) => {
-    const map = {
-      'cc5c': 'Nice Red',
-      '768fb8': 'Super Blue',
-      '9eae65': 'Fantastic Green',
-      'ffd700': 'Wonderful Yellow'
-    }
-
-    return map[hex]
-  }
-
-  idToHex = (id) => {
-    const map = {
-      1: 'cc5c',
-      2: '768fb8',
-      3: '9eae65',
-      4: 'ffd700'
-    }
-
-    return map[id]
-  }
-}
 
 /**
- * We can use a config file to determine which client to use.
- * However, this would still be mixing high-level policy with low-level implementation details.
- * Because now it's the details about the CONDITIONS under which we should use the legacy version or the new investor's version.
- * We've now taken those details and pushed that into the Application
+ * We can extract the logic of which client to use and separate it out into a new module.
  *
- * The next commit will show how to pull this further out and make a new abstraction.
-*/
+ * PaintDataClient MAY be a reference to either PaintJsClient or SuperInvestorClient.
+ * App doesn't need to know which one it is.
+ *
+ * The weaknesses to this approach:
+ * 1. You can only initialize the module once. Whatever is chosen when the App starts, that's what it's going to be.
+ *    --To fix that slightly: rather than export a class you can export a function:
+ *      export function getPaintDataClient() { return user.legacy ? new PainJsClient() : new SuperInvestorClient() }
+ * 2. This would be more difficult to test.
+ *    --In order to set up this situation, we would have to do one of a few things:
+ *      a. mock these classes thoroughly and something like this is not 100% clear how you'd mock it out.
+ *      b. more likely option: you'd stub out a bunch of stuff. In our case we'd have to set up the user so that it'd have a user.legacy true and false cases.
+ *
+ */
 
 class App extends Component {
   constructor(props) {
@@ -111,12 +28,7 @@ class App extends Component {
       colorData: []
     }
 
-    if (config.legacy) { // however some other options to determine this: user.legacy
-      this.client = new PaintJsClient()
-    } else {
-      this.client = new SuperInvestorClient()
-    }
-
+    this.client = new PaintDataClient()
     this.fetchColorData()
   }
 
